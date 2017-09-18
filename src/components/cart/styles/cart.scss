@@ -1,0 +1,186 @@
+.cart {
+  &Wrapper {
+    background-color: #fedd23;
+    margin-top: 200px;
+
+    &:before,
+    &:after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+  &Inner {
+    position: relative;
+    float: right;
+    width: 1100px;
+    top: -150px;
+    box-shadow: -7px 2px 15px 0 rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+
+  &Item {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    padding: 65px 85px 35px 50px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      width: 965px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ececec;
+
+    }
+  }
+
+  &Icon {
+    width: 130px;
+    height: 130px;
+    margin-left: 30px;
+  }
+
+  &Description {
+    display: flex;
+    flex-direction: column;
+    width: 465px;
+    margin-left: 35px;
+    padding-right: 70px;
+    text-align: left;
+    border-right: 1px solid rgba(43, 46, 64, 0.06);
+
+    &Title {
+      font-size: 20px;
+      font-family: 'WorkSans-Bold';
+    }
+
+    &Detail {
+      margin-top: 30px;
+      color: #7d7d7d;
+    }
+  }
+
+  &Select {
+    width: 240px;
+    position: relative;
+    margin-top: 50px;
+
+    select {
+      width: 100%;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 2px;
+      border: solid 1px #dcdcdc;
+      background: #fff url(../img/triangle.svg) no-repeat 210px 20px;
+      background-size: 15px 12px;
+      outline: none;
+      font-family: 'WorkSans-Regular';
+      font-size: 14px;
+      color: #4d4d4d;
+      padding-left: 20px;
+      text-transform: uppercase;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      text-indent: 1px;
+      text-overflow: '';
+
+      &:-ms-expand {
+        display: none;
+      }
+    }
+  }
+
+  &Delete {
+    float: right;
+    position: relative;
+    top: -5px;
+
+    &:hover {
+      cursor: pointer;
+
+      .cartDeleteIcon {
+        opacity: 0.8;
+      }
+    }
+
+    &Icon {
+      fill: #7D7D7D;
+    }
+  }
+
+  &Controls {
+    margin-top: 65px;
+
+    &Wrapper {
+      width: 305px;
+      padding-left: 45px;
+    }
+  }
+
+  &Input {
+    &Wrapper {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 2px;
+        border: solid 1px #dcdcdc;
+        outline: none;
+        background: transparent;
+        font-size: 22px;
+        color: #6c6c6c;
+
+        &:hover {
+          cursor: pointer;
+          opacity: .8;
+        }
+      }
+
+      input {
+        width: 60px;
+        background: transparent;
+        text-align: center;
+        outline: none;
+        border: none;
+        font-family: 'WorkSans-Regular';
+        font-size: 16px;
+        line-height: 40px;
+        color: #7d7d7d;
+      }
+    }
+
+    &Amount {
+      font-family: 'Avalon-Bold';
+      font-size: 20px;
+      line-height: 40px;
+      color: #000;
+      width: 110px;
+      text-align: right;
+    }
+  }
+
+  &Total {
+    float: right;
+    font-family: 'Avalon-Bold';
+    font-size: 35px;
+    line-height: 145px;
+    padding-right: 65px;
+  }
+
+  &Bottom {
+    position: absolute;
+    height: 75px;
+    width: 100%;
+    bottom: 0;
+    background-color: #fff;
+  }
+}

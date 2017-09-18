@@ -1,0 +1,17 @@
+footer {
+  position: relative;
+  height: 690px;
+  background: #000 url(../img/footer.png) center no-repeat;
+  padding: 0 240px;
+
+  div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Avalon-Bold';
+    font-size: 32px;
+    line-height: 52px;
+    color: #fff;
+  }
+}
