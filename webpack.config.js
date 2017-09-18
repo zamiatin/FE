@@ -26,20 +26,20 @@ module.exports = {
         use: isProd ? ExtractTextPlugin.extract ({
           fallback: 'style-loader',
           use: ['css-loader?minimize', 'sass-loader'],
-        }) : ['style-loader', 'css-loader?sourceMap', 'sass-loader']
+        }) : ['style-loader', 'css-loader?sourceMap', 'sass-loader'],
       },
       {
         test: /\.ttf$/,
-        loader: 'file-loader?name=[hash].[ext]'
+        loader: 'url-loader',
       },
       {
         test: /\.(png|jpg|svg)$/,
-        loader: 'url-loader?limit=1000000',
+        loader: 'url-loader',
       }
     ]
   },
 
-  devtool: NODE_ENV == 'development' ? 'cheap-module-eval-source-map' : false,
+  devtool: !isProd ? 'cheap-module-eval-source-map' : false,
 
     devServer: {
     hot: true,
