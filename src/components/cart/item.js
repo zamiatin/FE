@@ -16,33 +16,11 @@ class Item extends Component {
     this.handleChangeAmount = this.handleChangeAmount.bind(this);
 
     this.state = {
-      selectValue: '',
+      selectValue: this.props.quantity[0],
       amount: 0,
-      quantity: [],
-      price: 0
+      quantity: this.props.quantity,
+      price: this.props.price,
     };
-  }
-
-  componentWillMount() {
-    const { id } = this.props;
-    fetch(`http://59be7d9c359bf20011675515.mockapi.io/v1/cart/${id}`)
-      .then(response => {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-
-          return response.json()
-      .then(responseData => {
-          this.setState({
-            amount: responseData.price,
-            quantity: responseData.quantity.split(', '),
-            price: responseData.price
-          })
-        });
-      })
-      .catch((err) => console.log('Fetch Error :-S', err));
   }
 
   handleSelect(e) {
@@ -70,6 +48,12 @@ class Item extends Component {
         </g>
       </svg>;
 
+    const propsInput = {
+      handleChangeAmount: this.handleChangeAmount,
+      amount,
+      quantity
+    };
+
     return (
       <div className="cartItem">
         <img src={products} className="cartIcon" alt="" />
@@ -93,9 +77,7 @@ class Item extends Component {
             {trashIcon}
           </div>
           <div className="cartControls">
-            <Input handleChangeAmount={this.handleChangeAmount}
-              amount={amount}
-              quantity={quantity} />
+            <Input {...propsInput} />
           </div>
         </div>
       </div>
