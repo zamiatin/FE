@@ -55,17 +55,17 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      NODE_ENV: JSON.stringify(NODE_ENV)
+    }),
     new ExtractTextPlugin('main.css'),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
   ]
 };
 
 if (isProd) {
   module.exports.plugins.push(
-    new UglifyJSPlugin(),
-    new webpack.DefinePlugin({
-      NODE_ENV: JSON.stringify('production')
-    })
+    new UglifyJSPlugin()
   );
 } else {
   module.exports.plugins.push(

@@ -11,47 +11,43 @@ class Cart extends Component {
     this.handleDelete = this.handleDelete.bind(this);
 
     this.state = {
-      products1: null,
-      products2: null,
-      products3: null,
+      data: null,
+      isLoad: false
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { dataCart } = nextProps;
+  componentWillMount() {
+    fetch('http://59be7d9c359bf20011675515.mockapi.io/v1/cart')
+      .then(response => {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
+          }
 
-    if (dataCart) {
-      this.setState({
-        products1: dataCart[0],
-        products2: dataCart[1],
-        products3: dataCart[2],
-      });
-    }
+          return response.json()
+      .then(responseData => {
+          this.setState({
+            isLoad: true,
+            data: responseData.list.split(', ')
+          })
+        });
+      })
+      .catch((err) => console.log('Fetch Error :-S', err));
   }
 
   handleDelete(e) {
-    // const { data } = this.state;
-    // const index = data.indexOf(e.currentTarget.dataset.id);
-    // const newArr = data.splice(index, index);
-    // this.setState({
-    //   data: newArr
-    // });
+    const { data } = this.state;
+    const index = data.indexOf(e.currentTarget.dataset.id);
+    const newArr = data.splice(index, index);
+    this.setState({
+      data: newArr
+    });
   }
 
   render() {
-    const { dataCart } = this.props;
-    const list = dataCart ? dataCart.map((item, i) => {
-      const { price, quantity, title, description } = item;
-      const propsItem = {
-        key: i,
-        id: i,
-        handleDelete: this.handleDelete,
-        price,
-        quantity,
-      }
-      return <Item {...propsItem} />
-      })
-       : null;
+    const { data, isLoad } = this.state;
+    const list = isLoad ? data.map((item, i) => <Item key={i} id={item} handleDelete={this.handleDelete} />) : null;
 
     return (
       <div className="cartInner">
