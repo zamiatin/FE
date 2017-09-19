@@ -16,33 +16,10 @@ class Item extends Component {
     this.handleChangeAmount = this.handleChangeAmount.bind(this);
 
     this.state = {
-      selectValue: '',
-      amount: 0,
-      quantity: [],
-      price: 0
+      selectValue: this.props.dataItem.articles[0],
+      amount: this.props.dataItem.price,
+      quantity: this.props.dataItem.quantity,
     };
-  }
-
-  componentWillMount() {
-    const { id } = this.props;
-    fetch(`http://59be7d9c359bf20011675515.mockapi.io/v1/cart/${id}`)
-      .then(response => {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
-
-          return response.json()
-      .then(responseData => {
-          this.setState({
-            amount: responseData.price,
-            quantity: responseData.quantity.split(', '),
-            price: responseData.price
-          })
-        });
-      })
-      .catch((err) => console.log('Fetch Error :-S', err));
   }
 
   handleSelect(e) {
@@ -51,17 +28,24 @@ class Item extends Component {
     });
   }
 
+  componentWillMount() {
+    const { changeAmount, id, item } = this.props;
+
+    // changeAmount(id, item);
+  }
+
   handleChangeAmount(value) {
-    const { price } = this.state;
+    const { price } = this.props.dataItem;
     this.setState({
       amount: value * price
     })
   }
 
   render() {
+    const { articles } = this.props.dataItem;
     const { amount, quantity } = this.state;
 
-    const select = quantity.map((item, i) => <option key={i} value={item}>{item}</option>)
+    const select = articles.map((item, i) => <option key={i} value={item}>{item}</option>)
 
     const trashIcon = <svg width="20" height="23" viewBox="0 0 20 23">
         <g className="cartDeleteIcon" fillRule="nonzero" opacity=".534">

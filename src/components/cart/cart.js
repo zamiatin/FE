@@ -1,9 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+// components
 import Item from './item';
 
-//styles
-import styles from './styles/cart.scss';
+//actions
+import { fetchData } from '../../actions/fetch';
+import { changeAmount } from '../../actions/item';
 
+//styles
+import './styles/cart.scss';
+
+const mapStateToProps = state => ({
+  data: state.dataCart
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeAmount: bindActionCreators(changeAmount, dispatch),
+  fetchData: bindActionCreators(fetchData, dispatch)
+});
+
+@connect(mapStateToProps, mapDispatchToProps)
 class Cart extends Component {
   constructor(props) {
     super(props);
@@ -11,43 +29,45 @@ class Cart extends Component {
     this.handleDelete = this.handleDelete.bind(this);
 
     this.state = {
-      data: null,
-      isLoad: false
+      data: null
     };
   }
 
   componentWillMount() {
-    fetch('http://59be7d9c359bf20011675515.mockapi.io/v1/cart')
-      .then(response => {
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
-              response.status);
-            return;
-          }
+    const { fetchData } = this.props;
+    fetchData();
+  }
 
-          return response.json()
-      .then(responseData => {
-          this.setState({
-            isLoad: true,
-            data: responseData.list.split(', ')
-          })
-        });
-      })
-      .catch((err) => console.log('Fetch Error :-S', err));
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps;
+    data ? this.setState({
+      data
+    }) : null;
   }
 
   handleDelete(e) {
-    const { data } = this.state;
-    const index = data.indexOf(e.currentTarget.dataset.id);
-    const newArr = data.splice(index, index);
-    this.setState({
-      data: newArr
-    });
+    // const { data } = this.state;
+    // const index = data.indexOf(e.currentTarget.dataset.id);
+    // const newArr = data.splice(index, index);
+    // this.setState({
+    //   data: newArr
+    // });
   }
 
   render() {
-    const { data, isLoad } = this.state;
-    const list = isLoad ? data.map((item, i) => <Item key={i} id={item} handleDelete={this.handleDelete} />) : null;
+    const { data } = this.state;
+    const { changeAmount } = this.props;
+
+    const list = data ? data.map((item, i) => {
+      const propsItem = {
+        key: i,
+        id: i,
+        dataItem: item,
+        handleDelete: this.handleDelete,
+        changeAmount
+      }
+      return <Item {...propsItem} />
+      }) : null;
 
     return (
       <div className="cartInner">
