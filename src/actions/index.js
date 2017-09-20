@@ -1,8 +1,21 @@
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
+export const CHANGE_AMOUNT = "CHANGE_AMOUNT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+
+export const changeAmount = (id, item) => ({
+  type: CHANGE_AMOUNT,
+  id,
+  item
+});
 
 export const fetchSuccess = (data) => ({
   type: FETCH_SUCCESS,
   dataCart: data
+});
+
+export const deleteProduct = (id) => ({
+  type: DELETE_PRODUCT,
+  id
 });
 
 export const fetchData = () => dispatch => {

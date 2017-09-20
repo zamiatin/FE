@@ -4,7 +4,6 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 module.exports = {
-  // context: path.resolve(__dirname, "src"),
   entry: [
     "webpack-hot-middleware/client",
     "babel-polyfill",

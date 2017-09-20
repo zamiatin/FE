@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
-import dataCart from './dataCart';
-import item from './item';
+import products from './main';
 
 
 const rootReducer = combineReducers({
-  dataCart,
-  item
+  products,
 });
 
 export default rootReducer;

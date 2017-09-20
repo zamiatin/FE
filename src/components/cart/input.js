@@ -4,34 +4,39 @@ class Input extends Component {
   constructor(props) {
     super(props);
 
-    this.handleValue = this.handleValue.bind(this);
+    this.handleChangeAmount = this.handleChangeAmount.bind(this);
+    this.handleQuantity = this.handleQuantity.bind(this);
     this.handleDecrease = this.handleDecrease.bind(this);
     this.handleIncrease = this.handleIncrease.bind(this);
 
     this.state = {
-      value: 1,
+      quantity: 1,
       isDisableDecrease: true,
       isDisableIncrease: false,
     };
   }
 
-  handleValue(e) {
+  handleQuantity(e) {
     this.setState({
-      value: e.target.value
+      quantity: e.target.value
     });
   }
 
+  handleChangeAmount(value) {
+    const {changeAmount, price, id } = this.props;
+    changeAmount(id, (value * price));
+  }
+
   handleDecrease() {
-    const { value } = this.state;
-    const { handleChangeAmount } = this.props;
-    if (value == 1) {
+    const { quantity } = this.state;
+    if (quantity == 1) {
       this.setState({
         isDisableDecrease: true,
       });
     } else {
-      handleChangeAmount(value - 1);
+      this.handleChangeAmount(quantity - 1);
       this.setState({
-        value: value - 1,
+        quantity: quantity - 1,
         isDisableDecrease: false,
         isDisableIncrease: false,
       });
@@ -39,16 +44,16 @@ class Input extends Component {
   }
 
   handleIncrease() {
-    const { value } = this.state;
-    const { handleChangeAmount, quantity } = this.props;
-    if (value == quantity.length) {
+    const { quantity } = this.state;
+    const { articles } = this.props;
+    if (quantity == articles.length) {
       this.setState({
         isDisableIncrease: true,
       });
     } else {
-      handleChangeAmount(value + 1);
+      this.handleChangeAmount(quantity + 1);
       this.setState({
-        value: value + 1,
+        quantity: quantity + 1,
         isDisableIncrease: false,
         isDisableDecrease: false,
       });
@@ -56,7 +61,7 @@ class Input extends Component {
   }
 
   render() {
-    const { value, isDisableDecrease, isDisableIncrease } = this.state;
+    const { quantity, isDisableDecrease, isDisableIncrease } = this.state;
     const { amount } = this.props;
 
     return (
@@ -65,8 +70,8 @@ class Input extends Component {
           <button onClick={this.handleDecrease}
             disabled={isDisableDecrease ? true : false}
             style={isDisableDecrease ? {cursor: 'auto'} : null}>&ndash;</button>
-          <input value={value}
-            onChange={this.handleValue}
+          <input value={quantity}
+            onChange={this.handleQuantity}
             disabled />
           <button onClick={this.handleIncrease}
             disabled={isDisableIncrease ? true : false}

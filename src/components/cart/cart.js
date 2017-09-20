@@ -6,19 +6,18 @@ import { bindActionCreators } from 'redux';
 import Item from './item';
 
 //actions
-import { fetchData } from '../../actions/fetch';
-import { changeAmount } from '../../actions/item';
+import { fetchData, changeAmount, deleteProduct } from '../../actions';
 
 //styles
 import './styles/cart.scss';
 
 const mapStateToProps = state => ({
-  data: state.dataCart
+  data: state.products.dataCart
 });
 
 const mapDispatchToProps = dispatch => ({
   changeAmount: bindActionCreators(changeAmount, dispatch),
-  fetchData: bindActionCreators(fetchData, dispatch)
+  fetchData: bindActionCreators(fetchData, dispatch),deleteProduct: bindActionCreators(deleteProduct, dispatch)
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -45,34 +44,39 @@ class Cart extends Component {
     }) : null;
   }
 
-  handleDelete(e) {
-    // const { data } = this.state;
-    // const index = data.indexOf(e.currentTarget.dataset.id);
-    // const newArr = data.splice(index, index);
-    // this.setState({
-    //   data: newArr
-    // });
+  handleDelete(index) {
+    const { data, deleteProduct } = this.props;
+    deleteProduct(index);
   }
 
   render() {
+    const arrTotal = [];
+    let total;
     const { data } = this.state;
-    const { changeAmount } = this.props;
-
+    const { changeAmount, deleteProduct } = this.props;
     const list = data ? data.map((item, i) => {
       const propsItem = {
         key: i,
         id: i,
         dataItem: item,
         handleDelete: this.handleDelete,
-        changeAmount
+        changeAmount,
       }
+
       return <Item {...propsItem} />
       }) : null;
+
+    data ? data.forEach((item, i) => {
+      arrTotal.push(+item.amount);
+    }) : null;
+
+    data && data.length >= 1 ? total = arrTotal.reduce((sum, current) => sum + current
+    ): total = 0;
 
     return (
       <div className="cartInner">
         {list}
-        <div className="cartTotal">350 &euro;</div>
+        <div className="cartTotal">{total} &euro;</div>
       </div>
     );
   }

@@ -13,12 +13,10 @@ class Item extends Component {
   constructor(props) {
     super(props);
     this.handleSelect = this.handleSelect.bind(this);
-    this.handleChangeAmount = this.handleChangeAmount.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
 
     this.state = {
       selectValue: this.props.dataItem.articles[0],
-      amount: this.props.dataItem.price,
-      quantity: this.props.dataItem.quantity,
     };
   }
 
@@ -28,22 +26,13 @@ class Item extends Component {
     });
   }
 
-  componentWillMount() {
-    const { changeAmount, id, item } = this.props;
-
-    // changeAmount(id, item);
-  }
-
-  handleChangeAmount(value) {
-    const { price } = this.props.dataItem;
-    this.setState({
-      amount: value * price
-    })
+  handleDelete(e) {
+    this.props.handleDelete(e.currentTarget.dataset.id);
   }
 
   render() {
-    const { articles } = this.props.dataItem;
-    const { amount, quantity } = this.state;
+    const { changeAmount, dataItem: {articles, price, id, amount } } = this.props;
+    ;
 
     const select = articles.map((item, i) => <option key={i} value={item}>{item}</option>)
 
@@ -53,6 +42,14 @@ class Item extends Component {
           <path d="M19.288 3.082h-4.191V.09H5.027v2.993H.577a.534.534 0 0 0-.535.533c0 .294.24.532.535.532h1.373l1.584 16.72a1.971 1.971 0 0 0 1.974 1.936h9.026a1.971 1.971 0 0 0 1.974-1.934l1.663-16.722h1.116a.534.534 0 0 0 .535-.532.534.534 0 0 0-.535-.533zM6.098 1.154h7.927v1.928H6.097V1.154zm9.343 19.634l-.003.052a.901.901 0 0 1-.903.898H5.51a.902.902 0 0 1-.903-.898L3.026 4.147h14.07l-1.655 16.64z"/>
         </g>
       </svg>;
+
+      const propsInput = {
+        articles,
+        price,
+        id,
+        amount,
+        changeAmount
+      };
 
     return (
       <div className="cartItem">
@@ -72,14 +69,12 @@ class Item extends Component {
         </div>
         <div className="cartControlsWrapper">
           <div className="cartDelete"
-            data-id={this.props.id}
-            onClick={this.props.handleDelete}>
+            data-id={id}
+            onClick={this.handleDelete}>
             {trashIcon}
           </div>
           <div className="cartControls">
-            <Input handleChangeAmount={this.handleChangeAmount}
-              amount={amount}
-              quantity={quantity} />
+            <Input {...propsInput} />
           </div>
         </div>
       </div>
