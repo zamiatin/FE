@@ -26,12 +26,13 @@ class Item extends Component {
     });
   }
 
-  handleDelete(e) {
-    this.props.handleDelete(e.currentTarget.dataset.id);
+  handleDelete() {
+    const { id } = this.props;
+    this.props.handleDelete(id);
   }
 
   render() {
-    const { changeAmount, dataItem: {articles, price, id, amount } } = this.props;
+    const { changeAmount, id, dataItem: {articles, price, amount, quantity } } = this.props;
     ;
 
     const select = articles.map((item, i) => <option key={i} value={item}>{item}</option>)
@@ -48,6 +49,7 @@ class Item extends Component {
         price,
         id,
         amount,
+        quantity,
         changeAmount
       };
 
@@ -69,7 +71,6 @@ class Item extends Component {
         </div>
         <div className="cartControlsWrapper">
           <div className="cartDelete"
-            data-id={id}
             onClick={this.handleDelete}>
             {trashIcon}
           </div>

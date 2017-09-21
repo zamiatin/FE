@@ -2,10 +2,11 @@ export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const CHANGE_AMOUNT = "CHANGE_AMOUNT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
-export const changeAmount = (id, item) => ({
+export const changeAmount = (id, amount, quantity) => ({
   type: CHANGE_AMOUNT,
   id,
-  item
+  amount,
+  quantity
 });
 
 export const fetchSuccess = (data) => ({

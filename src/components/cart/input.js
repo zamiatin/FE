@@ -10,7 +10,7 @@ class Input extends Component {
     this.handleIncrease = this.handleIncrease.bind(this);
 
     this.state = {
-      quantity: 1,
+      quantity: +this.props.quantity,
       isDisableDecrease: true,
       isDisableIncrease: false,
     };
@@ -24,7 +24,7 @@ class Input extends Component {
 
   handleChangeAmount(value) {
     const {changeAmount, price, id } = this.props;
-    changeAmount(id, (value * price));
+    changeAmount(id, (value * price), value);
   }
 
   handleDecrease() {
@@ -70,7 +70,7 @@ class Input extends Component {
           <button onClick={this.handleDecrease}
             disabled={isDisableDecrease ? true : false}
             style={isDisableDecrease ? {cursor: 'auto'} : null}>&ndash;</button>
-          <input value={quantity}
+          <input value={this.props.quantity}
             onChange={this.handleQuantity}
             disabled />
           <button onClick={this.handleIncrease}

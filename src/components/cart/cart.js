@@ -45,7 +45,7 @@ class Cart extends Component {
   }
 
   handleDelete(index) {
-    const { data, deleteProduct } = this.props;
+    const { deleteProduct } = this.props;
     deleteProduct(index);
   }
 

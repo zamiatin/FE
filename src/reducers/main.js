@@ -13,9 +13,10 @@ const products = (state = initialState, action) => {
    case CHANGE_AMOUNT:
     return Object.assign({}, state, {
       dataCart: state.dataCart.map((target, index) => {
-        if (index + 1 == action.id) {
+        if (index == action.id) {
           return Object.assign({}, target, {
-            amount: action.item
+            amount: action.amount,
+            quantity: action.quantity
           })
         }
 
@@ -26,7 +27,7 @@ const products = (state = initialState, action) => {
     case DELETE_PRODUCT:
       return Object.assign({}, state, {
         dataCart: state.dataCart.filter((item, i) =>
-          i + 1 != action.id)
+          i != action.id)
       });
 
    default:
